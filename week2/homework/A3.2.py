@@ -32,13 +32,15 @@ sigma = 0.15
 t = 0.0
 n_events = 500000
 #n_events = 5
-all_pos = [] 
+all_pos = np.zeros([n_events, 4, 2]) 
+events = []
 for event in range(n_events):
     wall_times = [wall_time(pos[k][l], vel[k][l], sigma) for k, l  in singles]
     pair_times = [pair_time(pos[k], vel[k], pos[l], vel[l], sigma) for k, l in pairs]
     next_event = min(wall_times + pair_times)
     t += next_event
     for k, l in singles: pos[k][l] += vel[k][l] * next_event 
+    all_pos[event,:,:] = pos
     if min(wall_times) < min(pair_times):
         collision_disk, direction = singles[wall_times.index(next_event)]
         vel[collision_disk][direction] *= -1.0
@@ -52,7 +54,7 @@ for event in range(n_events):
         for k in range(2): 
             vel[a][k] += e_perp[k] * scal 
             vel[b][k] -= e_perp[k] * scal 
-        all_pos += [pos] 
+        events+=[event]
     if event%10000==0:
         print("%.5f%%"%(event/n_events*100))
     #print( 'event', event)
@@ -61,7 +63,7 @@ for event in range(n_events):
     #print( 'vel', vel)
 def hist_data():
     plt.figure()
-    plt.hist((np.array(all_pos)[:,:,0].flatten()), bins=100, normed=True)
+    plt.hist((np.array(all_pos)[events,:,0].flatten()), bins=100, normed=True)
     plt.xlabel(r'Position $x$')
     plt.ylabel(r'frequency')
     plt.title("Histogram of the x-Position with Molecular events")
