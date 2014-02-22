@@ -1,0 +1,59 @@
+%Schriftgr{\"o}{\ss}e, Layout, Papierformat
+\documentclass[12pt,a4paper]{article}
+
+\usepackage[latin1]{inputenc}   %Umlaute erm{\"o}glichen
+\usepackage[ngerman]{babel} %deutsches Paket
+
+\usepackage{amssymb}%Mathemodus
+\usepackage{amsmath}
+\usepackage{latexsym}
+\usepackage{algorithmic}
+\usepackage{textcomp}
+\usepackage[T1]{fontenc}
+\usepackage{bm}% bold math
+\usepackage{hyperref}
+\usepackage{amsfonts}
+\usepackage{graphics}
+\usepackage{psfrag}
+\usepackage[bf,small,sf]{caption}
+\usepackage{graphicx}
+\usepackage{epsfig}
+\usepackage{rotating}
+\usepackage[latin1]{inputenc}
+\usepackage{color}
+\usepackage[usenames,dvipsnames]{pstricks}
+\usepackage{epsfig}
+\usepackage{pst-grad} % For gradients
+\usepackage{pst-plot} % For axes
+%Seite einrichten
+\usepackage[left=2cm,right=3cm,top=2cm,bottom=2cm,includeheadfoot]{geometry}
+\parindent0mm % Unterdr{\"u}ckt die Absatzeinr{\"u}ckung
+%Kopf- und Fu{\ss}zeilen
+\usepackage{fancyhdr}                   %Paket f{\"u}r Kopf- und Fusszeile
+\usepackage[section]{placeins}
+\pagestyle{fancy} \fancyhf{}
+%Kopfzeile
+\fancyhead[L]{\small{\nouppercase{\leftmark}}}%
+%Linie oben
+\renewcommand{\headrulewidth}{0.5pt}
+%Fuﬂzeile
+\fancyfoot[C]{\small{\thepage}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%ein paar Farben definieren
+\definecolor{lightblue}{rgb}{0.3,0.85,1}
+%Kommentarfunktion
+\newcommand{\jnote}[1]{\textcolor{red}{\textit{[J: #1]}}}
+\newcommand{\vnote}[1]{\textcolor{blue}{\textit{[V: #1]}}}
+\newcommand{\fnote}[1]{\textcolor{lightblue}{\textit{[F: #1]}}}
+\newcommand{\tnote}[1]{\textcolor{green}{\textit{[T: #1]}}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%Dokumentbeginn
+\begin{document}
+
+\begin{equation}
+	\langle x^2 - {\langle x \rangle}^2 \rangle \\ 
+	= \frac{1}{N}\sum_{k=1}^{N}{x_i - }
+\end{equation}
+\end{document}
