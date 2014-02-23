@@ -2,6 +2,7 @@ import numpy as np
 V = 0.8 ** 2
 N = 4
 p_accept = 0.51516 
+p_accept = 0.58516 
 Z = V * p_accept
 Q = (0.2)**2
 P1 = Q**N * 24
