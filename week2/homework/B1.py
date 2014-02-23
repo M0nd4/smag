@@ -41,4 +41,4 @@ for run in range(n_runs):
     if run%10000==0:
         print("%.3f%%"%(run/n_runs*100))
 print( '%.5f proportion of confs in eight-dimensional volume element.'%(hits / float(n_runs)))
-print( '%.5f acceptance rate'%(success / all_fails))
+print( '%.5f acceptance rate'%(success / (all_fails+success)))
