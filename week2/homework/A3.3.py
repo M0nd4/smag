@@ -69,7 +69,7 @@ def hist_data():
     plt.hist(all_pos, bins=100, normed=True)
     plt.xlabel(r'Position $x$')
     plt.ylabel(r'frequency')
-    plt.title("Histogram of the x-Position with Molecular events")
+    plt.title("Histogram of the x-Position with Molecular events (at t=0,1,2..)")
     plt.grid()
     plt.show()
 hist_data()
