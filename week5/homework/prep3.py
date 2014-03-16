@@ -11,7 +11,7 @@ def Energy(n, cubic, quartic):
          + 3.0 / 2.0 * quartic * (n ** 2 + n + 1.0 / 2.0)
 
 def Z(cubic, quartic, beta, n_max):
-    Z = sum(math.exp(-beta * Energy(n, cubic, quartic)) for n in range(n_max + 1))
+    Z = np.sum(np.exp(-beta * Energy(n, cubic, quartic)) for n in range(n_max + 1))
     return Z
 
 def plot_potentials():
@@ -41,9 +41,21 @@ def plot_energy():
     plt.grid(True)
     plt.legend(prop={'size':10},loc= 3)
     plt.show()
+def print_app():
+    beta = np.linspace(0.1,1,100)
+    plt.figure()
+    plt.xlabel("beta")
+    plt.ylabel("Partition Function")
+    for nmax in np.arange(1,30,5):
+        plt.plot(beta,Z(0,0,beta,nmax),label="Numerical Value with nmax = "+str(nmax))
+    plt.plot(beta,1/(2 *np.sinh(beta/2)), label="Same with sinh")
+    plt.legend(loc= 8)
+    plt.title("Approximation of the partition function with increasing sum")
+    plt.yscale("log")
+    plt.show()
 
-plot_energy()
 
+print_app()
 
 
 
