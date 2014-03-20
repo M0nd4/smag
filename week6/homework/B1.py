@@ -7,7 +7,7 @@ def rho_free(x, y, beta):
 beta = 20.0
 N = 80
 dtau = beta / N
-delta = 5.0
+delta = 2.0
 n_steps = 100000
 x = [2.0] * N
 data = []
@@ -27,7 +27,7 @@ for step in range(n_steps):
     if random.uniform(0.0, 1.0) < new_weight / old_weight:
         x[k] = x_new
         acc += 1
-    if step % 20 == 0:
+    if step % 1 == 0:
         k = random.randint(0, N - 1)
         data.append(x[k])
 pylab.hist(data, bins=50, normed=True, label='QMC')
