@@ -26,30 +26,35 @@ cubic = -1
 quartic = 1
 def V(y):
     return y**2 / 2 + cubic * y**3 + quartic * y**4
-beta = 2.0
+beta = 20.0
 N = 80
 dtau = beta / N
 delta = 1.0
 n_steps = 30000
 x0 = 0
-x = [x0] * N
-Ncut = 58
+x = [0] * N
+
+w = lambda y: math.exp(sum(-V(a) *  dtau for a in y))
 #Choosing appropriate initial values
-w = lambda y: math.exp(sum(-a **2/ 2.0 * dtau for a in y))
-w2 = lambda y: math.exp(sum(-V(a) *  dtau for a in y))
+x = levy_free_path(x0, x0, dtau, N)
+while w(x)<0.01:
+    x = levy_free_path(x0, x0, dtau, N) 
+
+Ncut = 40
 data = []
 Weight_old = w(x)
 for step in range(n_steps):
     x_new = levy_free_path(x[0], x[Ncut], dtau, Ncut) + x[Ncut:]
-    Weight_new = w2(x_new) 
+    Weight_new = w(x_new) 
     if random.random() < min(1, Weight_new/ Weight_old):
         Weight_old = Weight_new
         x = x_new[:]
     random.shuffle(x)
     if step%1000==0:
         print("process \t %.3f "%(step/n_steps*100))
-    for k in x:
-        data.append(k)
+    if x[0]!=0:
+        for k in x:
+            data.append(k)
     
 def plot_path():
     plt.figure()
@@ -64,6 +69,6 @@ def plot_path():
     plt.grid(True)
     plt.legend()
     ProgType = 'levy_non_harm_path_metropolis'
-    plt.title("Levy Metropolis Algorithm \n Sampling the Non-Linear Potential $V(x) =  y^2/2 - y^3 + y^4$" '\n with beta = ' + str(beta) + ', dtau = ' + str(dtau) + ', Nsteps = '+ str(n_steps))
+    plt.title("Levy Metropolis Algorithm \n Sampling the Non-Linear Potential $V(x) =  x^2/2 - x^3 + x^4$" '\n with beta = ' + str(beta) + ', dtau = ' + str(dtau) + ', Nsteps = '+ str(n_steps))
     plt.show()
 plot_path()
