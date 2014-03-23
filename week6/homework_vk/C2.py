@@ -41,7 +41,7 @@ data = []
 Weight_old = w(x)
 for step in range(n_steps):
     x_new = levy_free_path(x[0], x[Ncut], dtau, Ncut) + x[Ncut:]
-    Weight_new = w(x_new) 
+    Weight_new = w2(x_new) 
     if random.random() < min(1, Weight_new/ Weight_old):
         Weight_old = Weight_new
         x = x_new[:]
