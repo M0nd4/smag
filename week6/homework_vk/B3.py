@@ -14,16 +14,17 @@ def levy_harmonic_path(xstart, xend, dtau, N):
         x.append(random.gauss(Ups2 / Ups1, \
                1.0 / math.sqrt(Ups1)))
     return x
-beta = 20.0
+beta = 10.0
 N = 80
 dtau = beta / N
 delta = 1.0
+sigma = math.sqrt(1 / (2*math.tanh(beta/2)))
 n_steps = 200
 x = [2.0] * N
 data = []
 for step in range(n_steps):
-    x = levy_harmonic_path(x[0],x[0],dtau,N)
-    x = x[N//2:] + x[:N//2]
+    x_start = random.gauss(0.0,sigma)
+    x = levy_harmonic_path(x_start,x_start,dtau,N)
     if step%1000:
         print("process \t %.3f "%(step/n_steps*100))
     k = random.randint(0, N - 1)
@@ -42,7 +43,7 @@ def plot_path():
     plt.ylabel('$\\pi(x)$ (normalized)')
     plt.axis([-3.0, 3.0, 0.0, 0.6])
     plt.legend()
-    ProgType = 'levy_harm_path'
-    plt.title(ProgType + ' beta = ' + str(beta) + ', dtau = ' + str(dtau) + ', Nsteps = '+ str(n_steps))
+    ProgType = 'levy_harm_path_sigma'
+    plt.title("Levy Path sampling in the Harmonic Potential\n  Where we used $\\sigma =   1/ \\sqrt{2 \\tanh(\\beta/2)}$ \n and parameters $\\beta = " + str(beta) + '$, $ d\\tau = ' + str(dtau) + '$, $ Nsteps = '+ str(n_steps)+"$")
     plt.show()
 plot_path()
