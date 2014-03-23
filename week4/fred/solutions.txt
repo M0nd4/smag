@@ -1,0 +1,145 @@
+A1:
+
+1. Vol_s(r, 3) = $$\frac{4}{3} \pi r^3$$
+
+2. Vol1_s(3) = $$\frac{4}{3} \pi$$
+
+3. Vol1_s(d) = $$ \frac{\pi^\frac{d}{2}}{\Gamma(\frac{d}{2} + 1)}$$
+
+4. Vol1_cyl(d+1) = Vol1_s(d) * 2
+
+5. Vol1_cyl(d+1) / Vol1_s(d) = 2
+
+6. Vol1_cube(d) = $$2^d$$
+
+
+A2:
+
+1. Yes
+
+2. To modify the preparation program such that it computes the Volume of a hypersphere of a given radius, one would simply multiply the result for the unit hypersphere with $$r^d$$. In terms of the program: Replace lines 3 and 4 with
+
+def Vol_s(radius, dimension):
+    return math.pi ** (dimension / 2.0)/ math.gamma(dimension / 2.0 + 1.0) * radius ** dimension
+
+and call the function Vol_s(radius, dimension) in the last line. 
+
+3. The modified program Vol1_s_d_int_movie.py looks as follows:
+
+import random, math
+import matplotlib.pyplot as plt 
+
+def Vol1_s(dimension):
+    return math.pi ** (dimension / 2.0)/ math.gamma(dimension / 2.0 + 1.0)
+
+x = []
+y = []
+for dimension in range(1,200):
+    x.append(dimension)
+    y.append(Vol1_s(dimension))
+
+plt.figure()
+plt.semilogy(x,y)
+plt.title('hypersphere volume: Vol1_s(d) over d for integer dimensions')
+plt.xlabel('d')
+plt.ylabel('Vol1_s(d)')
+plt.savefig('Vol1_s(d)_d_integer.png')
+plt.show()
+plt.clf()
+
+UPLOAD FIGURE**************************************
+
+The calculated numerical values:
+
+d = 5,          Vol1_s(5) = 5.263789
+d = 20,         Vol1_s(20) = 2.580689e-02
+d = 200,        Vol1_s(200) = 5.558833e-109
+
+
+B1:
+
+----------------------------------------------------------
+1000000 trials used for all d
+d  | estimation of Vol1_s(d) | Vol1_s(d) (exact) |  n_hits
+----------------------------------------------------------
+ 1 |                2.000000 |          2.000000 | 1000000
+ 2 |                3.141116 |          3.141593 |  785279
+ 3 |                4.197832 |          4.188790 |  524729
+ 4 |                4.927536 |          4.934802 |  307971
+ 5 |                5.269088 |          5.263789 |  164659
+ 6 |                5.182080 |          5.167713 |   80970
+ 7 |                4.717952 |          4.724766 |   36859
+ 8 |                4.109312 |          4.058712 |   16052
+ 9 |                3.306496 |          3.298509 |    6458
+10 |                2.582528 |          2.550164 |    2522
+11 |                1.916928 |          1.884104 |     936
+12 |                1.372160 |          1.335263 |     335
+13 |                0.753664 |          0.910629 |      92
+14 |                0.606208 |          0.599265 |      37
+15 |                0.327680 |          0.381443 |      10
+16 |                0.327680 |          0.235331 |       5
+17 |                0.000000 |          0.140981 |       0
+
+
+
+B2:
+
+2. for d = 2,  n_trails = 1000000: r^2_mean = 0.500389
+
+3. The mean value of r^2 can be calculated by the integral:
+$\int_{V} \rho r^2 \mathrm{d}V = \frac{1}{V} \int \limits_{0}^{2 \pi} \mathrm{d}\phi \int \limits_{0}^{1} r^3     \mathrm{d}r = \frac{2 \pi}{4 \pi} = \frac{1}{2}$$ for density $$\rho = \frac{1}{V}$$ and volume $$V = 2 \pi$$. The uniform density is given due to the equiprobability principle valid for our markov chain sampling.
+
+
+B3:
+
+$$\langle Q \rangle = \frac{\mathrm{Vol1\_s(d + 1)}}{\mathrm{Vol1\_cyl(d+1)}} = \frac{\mathrm{Vol1\_s(d+1)}}{2\,\mathrm{Vol1\_s(d)}}$$
+
+Computed values for Vol1_s(200) / Vol1_s(199)
+for 1000000 trials:
+d | Vol1_s(d + 1) / Vol1_s(d)
+1 |  1.571354
+2 |  1.332524
+
+These values are equal to the exact values (up to statistical errors), 
+$$\frac{\pi}{2} = 1.570796$$ and $$\frac{4}{3} = 1.333333$$, respectivly.
+
+UPLOAD PROGRAM!!!***************************
+
+
+C1:
+
+The strategy for fast programming is to evade calculating r^2 each time. Since we only change one coefficent, we can simply calculate the new r^2, a sum of the squares of the coefficents, by subtracting the old coefficent x_k^2 and adding the new one x_k_new^2. The same thing can be done for calculating the radius in d+1 dimensions with the supplementary coefficent x_supp. 
+
+UPLOAD PROGRAM***************************
+
+Result of the calculation:
+for 1000000 trials:
+d = 199
+Vol1_s(200) / Vol1_s(199) = 0.177322
+
+exact calculation, done with the program of exercise a2:
+Vol1_s(200) / Vol1_s(199) = 0.177024
+
+Up to a statistical error, the results are the same!
+
+C2:
+
+The strategy is to do an iteration, using the formula
+$$\mathrm{Vol1\_s(d+1)}  = 2 \, \langle Q \rangle \, \mathrm{Vol1\_s(d)}$$, 
+from exercise B3 with the starting value $$\mathrm{Vol1\_s(d = 1)} = 2$$.
+
+UPLOAD PROGRAM**********
+UPLOAD FIGURE**********************
+
+
+C3:
+
+ Vol1_s(20) (exact result) = 0.025807
+n_trials | <Vol1_s(20)> |  Error   | abs(<Vol1_s(20)> - Vol1_s(20)) |
+----------------------------------------------------------------------
+       1 |     0.000000 | 0.000000 |                       0.025807 |
+      10 |     5.479576 | 2.674767 |                       5.453769 |
+     100 |     0.036603 | 0.008869 |                       0.010796 |
+    1000 |     0.027765 | 0.001661 |                       0.001958 |
+   10000 |     0.025301 | 0.000470 |                       0.000506 |
+  100000 |     0.025755 | 0.000147 |                       0.000052 |

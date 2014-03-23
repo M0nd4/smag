@@ -22,27 +22,35 @@ def levy_free_path(xstart, xend, dtau, N):
         sigma = math.sqrt(1.0 / (1.0 / dtau + 1.0 / dtau_prime))
         x.append(random.gauss(x_mean, sigma))
     return x
-beta = 2.0
+cubic = -1
+quartic = 1
+def V(y):
+    return y**2 / 2 + cubic * y**3 + quartic * y**4
+beta = 20.0
 N = 80
 dtau = beta / N
 delta = 1.0
-n_steps = 200
-x = [2.0] * N
+n_steps = 30000
+x0 = 0
+x = [x0] * N
+Ncut = 58
+#Choosing appropriate initial values
+w = lambda y: math.exp(sum(-a **2/ 2.0 * dtau for a in y))
+w2 = lambda y: math.exp(sum(-V(a) *  dtau for a in y))
 data = []
-Weight_old = 1
+Weight_old = w(x)
 for step in range(n_steps):
-    x_new = levy_free_path(x[0],x[0],dtau,N)
-    Weight_new = math.exp(sum(-a **2/ 2.0 * dtau for a in x_new))
+    x_new = levy_free_path(x[0], x[Ncut], dtau, Ncut) + x[Ncut:]
+    Weight_new = w(x_new) 
     if random.random() < min(1, Weight_new/ Weight_old):
         Weight_old = Weight_new
         x = x_new[:]
-    x = x[N//2:] + x[:N//2]
-    if step%1000:
+    random.shuffle(x)
+    if step%1000==0:
         print("process \t %.3f "%(step/n_steps*100))
     for k in x:
         data.append(k)
-    
-
+print(len(data))    
 def plot_path():
     plt.figure()
     plt.hist(data, bins=50, normed=True, label='QNC')
