@@ -26,7 +26,7 @@ cubic = -1
 quartic = 1
 def V(y):
     return y**2 / 2 + cubic * y**3 + quartic * y**4
-beta = 20.0
+beta = 2.0
 N = 80
 dtau = beta / N
 delta = 1.0
@@ -57,12 +57,13 @@ def plot_path():
     x_values = [0.1 * a for a in range (-30, 30)]
     y_values = [math.sqrt(math.tanh(beta / 2.0)) / math.sqrt(math.pi) * \
                       math.exp( - xx **2 * math.tanh( beta / 2.0)) for xx in x_values]
-    plt.plot(x_values, y_values, label='exact')
+    #plt.plot(x_values, y_values, label='exact')
     plt.xlabel('$x$')
     plt.ylabel('$\\pi(x)$ (normalized)')
-    plt.axis([-3.0, 3.0, 0.0, 0.6])
+    #plt.axis([-3.0, 3.0, 0.0, 0.6])
+    plt.grid(True)
     plt.legend()
-    ProgType = 'levy_harm_path_metropolis'
-    plt.title(ProgType + ' beta = ' + str(beta) + ', dtau = ' + str(dtau) + ', Nsteps = '+ str(n_steps))
+    ProgType = 'levy_non_harm_path_metropolis'
+    plt.title("Levy Metropolis Algorithm \n Sampling the Non-Linear Potential $V(x) =  y^2/2 - y^3 + y^4$" '\n with beta = ' + str(beta) + ', dtau = ' + str(dtau) + ', Nsteps = '+ str(n_steps))
     plt.show()
 plot_path()
