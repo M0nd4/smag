@@ -30,7 +30,7 @@ beta = 20.0
 N = 80
 dtau = beta / N
 delta = 1.0
-n_steps = 30000
+n_steps = 300000
 x0 = 0
 x = [0] * N
 
@@ -40,7 +40,7 @@ x = levy_free_path(x0, x0, dtau, N)
 while w(x)<0.01:
     x = levy_free_path(x0, x0, dtau, N) 
 
-Ncut = 40
+Ncut = 60
 data = []
 Weight_old = w(x)
 for step in range(n_steps):
