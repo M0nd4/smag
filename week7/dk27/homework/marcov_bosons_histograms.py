@@ -1,5 +1,4 @@
 import random, math, pylab, os
-import matplotlib.pyplot as plt
 
 # harmonic ground state wave function (Gauszian)
 def wave(x):
