@@ -1,11 +1,11 @@
 import random, math, pylab, mpl_toolkits.mplot3d, numpy, os
 
-choice = 'pancake'
+choice = 'cigar'
 
 print 'Producing plot w/ shape of' , choice
 
-#omega = [4.0, 4.0, 1.0] # CIGAR
-omega = [1.0, 5.0, 1.0] # PANCAKE
+omega = [4.0, 4.0, 1.0] # CIGAR
+#omega = [1.0, 5.0, 1.0] # PANCAKE
 
 positions = {}
 
@@ -39,10 +39,11 @@ def boson_trap():
     nsteps = 70000
     omega_harm = 1.0
     for d in range(3): omega_harm *= omega[d] ** (1.0 / 3.0)
-    T_star = 0.6
+    T_star = 1. # adjust to see when condensation sets in
     T = T_star * omega_harm * N ** (1.0 / 3.0)
     beta = 1.0 / T
     print 'omega: ', omega
+    print 'T: ', T
     positions = {}
     filename = 'bosons_3d_config.txt'
     global positions, filename, beta, N, nsteps, T_star, T, omega_harm
@@ -98,7 +99,7 @@ def boson_trap():
     f.close()
 
 
-for k in range(6):
+for k in range(4):
     boson_trap()
 
 

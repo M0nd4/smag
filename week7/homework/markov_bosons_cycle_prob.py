@@ -35,7 +35,7 @@ cycle_hist = []
 N = 512 # number of Bosons
 T_star = 0.6
 beta = 1.0 / (T_star * N ** (1.0 / 3.0))
-nsteps = 200000
+nsteps = 500000
 positions = {}
 filename = 'boson_configuration.txt'
 positions = {}
@@ -100,7 +100,7 @@ f.close()
 
 # Produce cycle length Distribution
 
-pylab.hist(cycle_hist, bins = 200, normed = True, label = 'Prob. Dist. of being in a cycle of a specific length')
+pylab.hist(cycle_hist, bins = 500, normed = True, label = 'Prob. Dist. of being in a cycle of a specific length')
 pylab.xlabel('Cycle length')
 pylab.ylabel('Probability to be in such a cycle')
 pylab.ylim(0., 0.01)

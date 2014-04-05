@@ -104,7 +104,7 @@ pylab.hist(cycle_hist, bins = 200, normed = True, label = 'Prob. Dist. of being 
 pylab.xlabel('Cycle length')
 pylab.ylabel('Probability to be in such a cycle')
 pylab.ylim(0., 0.01)
-pylab.title('Cycle Lenth Distribution')
+pylab.title('Cycle Length Distribution')
 pylab.legend()
 pylab.savefig('Cycle_Length_Distribution.png')
 pylab.show()
