@@ -5,14 +5,14 @@ def x_y(k, L):
     x = k - y * L
     return x, y
 
-L = 32
+L = 128
 N = L * L
 nbr = {i : ((i // L) * L + (i + 1) % L, (i + L) % N,
             (i // L) * L + (i - 1) % L, (i - L) % N) \
                                     for i in range(N)}
 
 # System Temperature. High:3.0, Critical: 2.27
-T = 1.0
+T = 2.27
 filename = 'local_'+ str(L) + '_' + str(T) + '.txt'
 if os.path.isfile(filename):
     f = open(filename, 'r')
@@ -24,7 +24,7 @@ if os.path.isfile(filename):
 else:
     S = [random.choice([1, -1]) for k in range(N)]
     print 'starting from scratch'
-nsteps = N * 10
+nsteps = N * 1000
 beta = 1.0 / T
 for step in range(nsteps):
     k = random.randint(0, N - 1)

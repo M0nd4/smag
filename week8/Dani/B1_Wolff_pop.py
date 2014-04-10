@@ -20,13 +20,12 @@ for step in range(nsteps):
     k = random.randint(0, N - 1)
     Pocket, Cluster = [k], [k]
     while Pocket != []:
-        j = random.choice(Pocket)
+        j = Pocket.pop()
         for l in nbr[j]:
             if S[l] == S[j] and l not in Cluster \
                    and random.uniform(0.0, 1.0) < p:
                 Pocket.append(l)
                 Cluster.append(l)
-        Pocket.remove(j)
     for j in Cluster:
         S[j] *= -1
     E.append(energy(S, N, nbr))
